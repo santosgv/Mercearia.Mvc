@@ -1,1 +1,1 @@
-maca|5|Fruta|200
+Banana|10|Fruta|100

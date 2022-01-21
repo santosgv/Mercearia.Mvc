@@ -108,17 +108,48 @@ class ControllerEstoque:
     def alterarProduto(self, nomeAltera, novoNome , novoPreco ,novaCategoria ,novaQuantidade):
         x=EstoqueDao.ler()
         y=CategoriaDao.ler()
-
         h=list(filter(lambda x:x.categoria ==novaCategoria , y))
         if len(h) > 0:
-            est= list(filter(lambda x:x.produto.nome == nomeAltera, x))
+            est = list(filter(lambda x:x.produto.nome == nomeAltera, x))
             if len(est) > 0:
                 est = list(filter(lambda x: x.produto.nome == novoNome, x))
                 if len(est) == 0 :
-                    pass ## to aqui
+                    x = list(map(lambda x: Estoque(Produtos(novoNome, novoPreco , novaCategoria), novaQuantidade) if(x.produto.nome == nomeAltera) else(x),x))
+                    print('Produto alterado com sucesso')
                 else:
                     print('Produto ja Cadastrado')
             else:
                 print('O produto que deseja alterar nao existe')
         else:
             print('A categoria que deseja alterar nao existe')
+
+        with open('Estoque.txt', 'w') as arq:
+            for i in x:
+                arq.writelines(i.produto.nome + "|" +
+                               i.produto.preco + "|" +
+                               i.produto.categoria + "|" +
+                               str(i.quantidade))
+
+                arq.writelines('\n')
+
+
+
+    def mostraEstoque(self):
+        estoque= EstoqueDao.ler()
+
+        if len(estoque) == 0:
+            print('Estoque vazio')
+
+
+        else:
+            for i in estoque:
+                print(f'''
+                    =========== Produto ===========
+                    Nome       .: {i.produto.nome}
+                    Preco      .: {i.produto.preco}
+                    Caregoria  .: {i.produto.categoria}
+                    Quantidade .: {i.quantidade}
+                    ===============================
+                ''')
+
+
