@@ -1,8 +1,8 @@
-from Dao import CategoriaDao
-from Models import Categoria
+from Dao import CategoriaDao, EstoqueDao
+from Models import Categoria, Produtos , Estoque
 
 class ControllerCategoria:
-    def CadastrarCatergoria(self, novaCategoria):
+    def cadastrarCatergoria(self, novaCategoria):
         existe = False
         x = CategoriaDao.ler()
         for i in x:
@@ -57,12 +57,68 @@ class ControllerCategoria:
     def mostrarCategoria(self):
         categoria= CategoriaDao.ler()
 
-        if len(categoria) ==0 :
+        if len(categoria) == 0 :
             print('Categoria vazia')
             return 0
 
         for i in categoria:
             print(f'Caregoria : {i.categoria}')
 
+class ControllerEstoque:
+    def cadastrarProduto(self, nome, preco,categoria, quantidade):
+        x = EstoqueDao.ler()
+        y = CategoriaDao.ler()
 
+        cat=list(filter(lambda  x:x.categoria == categoria,y))
+        est = list(filter(lambda x:x.produto.nome == nome, x))
 
+        if len(cat) > 0:
+            if len(est) ==0:
+                produto = Produtos(nome , preco,categoria)
+                EstoqueDao.salvar(produto ,quantidade)
+                print('Produto salvo com sucesso')
+            else:
+                print('Produto ja existe em estoque')
+        else:
+            print('Categoria inexistente')
+
+    def removerProduto(self, nome):
+        x = EstoqueDao.ler()
+
+        est= list(filter(lambda x:x.produto.nome == nome,x))
+
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].produto.nome == nome:
+                    del x[i]
+                    break
+            print('Produto removido com Sucesso')
+        else:
+            print('O produto que deseja Remover nao existe')
+
+        with open('Estoque.txt', 'w') as arq:
+            for i in x:
+                arq.writelines(i.produto.nome + "|" +
+                               i.produto.preco + "|" +
+                               i.produto.categoria + "|" +
+                               str(i.quantidade))
+
+                arq.writelines('\n')
+
+    def alterarProduto(self, nomeAltera, novoNome , novoPreco ,novaCategoria ,novaQuantidade):
+        x=EstoqueDao.ler()
+        y=CategoriaDao.ler()
+
+        h=list(filter(lambda x:x.categoria ==novaCategoria , y))
+        if len(h) > 0:
+            est= list(filter(lambda x:x.produto.nome == nomeAltera, x))
+            if len(est) > 0:
+                est = list(filter(lambda x: x.produto.nome == novoNome, x))
+                if len(est) == 0 :
+                    pass ## to aqui
+                else:
+                    print('Produto ja Cadastrado')
+            else:
+                print('O produto que deseja alterar nao existe')
+        else:
+            print('A categoria que deseja alterar nao existe')
