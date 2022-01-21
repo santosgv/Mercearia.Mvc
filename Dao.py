@@ -72,7 +72,7 @@ class EstoqueDao:
 
         if len(cls.estoque) > 0:
             for i in cls.estoque:
-                estoq.append(Estoque(Produtos(i[0], i[1], i[2]), i[3]))
+                estoq.append(Estoque(Produtos(i[0], i[1], i[2]), int(i[3])))
 
         return estoq
 
