@@ -35,6 +35,16 @@ class ControllerCategoria:
                     arq.writelines(i.categoria)
                     arq.writelines('\n')
 
+        estoque =EstoqueDao.ler()
+
+        estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome , x.produto.preco ,"Sem Categoria"), x.quantidade)
+                               if (x.produto.categoria == categoriaRemover) else(x), estoque))
+
+        with open('Estoque.txt','w') as arq:
+            for i in estoque:
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                arq.writelines('\n')
+
 
     def alterarCategoria(self, caregoriaAlterar, categoriaAlterada):
         x = CategoriaDao.ler()
@@ -45,6 +55,19 @@ class ControllerCategoria:
             if len(cat1) == 0:
                 x= list(map(lambda x : Categoria(categoriaAlterada) if (x.categoria == caregoriaAlterar) else(x),x))
                 print('Alterado com sucesso')
+
+                estoque = EstoqueDao.ler()
+
+                estoque = list(
+                    map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, categoriaAlterada), x.quantidade)
+                    if (x.produto.categoria == caregoriaAlterar) else (x), estoque))
+
+                with open('Estoque.txt', 'w') as arq:
+                    for i in estoque:
+                        arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(
+                            i.quantidade))
+                        arq.writelines('\n')
+
             else:
                 print('A categoria para qual deseja alterar ja existe')
         else:
@@ -484,16 +507,19 @@ class ControllerFuncionario:
     def mostrarFuncionario(self):
         funcionario = FuncionarioDao.ler()
 
+        funcionarios = 1
+
         if len(funcionario) == 0:
             print('A Lista de Funcionario esta vazia')
         else:
             for i in funcionario:
                 print(f'''
-                    =========== Funcionario ==============
+                    =========== Funcionario {funcionarios} ==========
                     Nome ...........: {i.nome}
                     Telefone .......: {i.telefone}
                     CPF ............: {i.cpf}
                     Email ..........: {i.email}
                     Endereco .......: {i.endereco}
-                    ======================================
+                    =====================================
                     ''')
+                funcionarios +=1

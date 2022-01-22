@@ -1,3 +1,4 @@
-Maca|5|Fruta|65
-Banana|10|Fruta|83
-uva|2|Fruta|69
+coisa|10|Hortalica|20
+coisa1|10|Hortalica|20
+coisa2|10|Fruta|20
+coisa3|10|Verdura|20
