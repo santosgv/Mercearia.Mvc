@@ -48,7 +48,6 @@ class VendaDao:
             vend.append(Venda(Produtos( i[0], i[1], i[2]), i[3], i[4], i[5], i[6]))
         return vend
 
-
 class EstoqueDao:
     @classmethod
     def salvar(cls, produto : Produtos , quantidade):
@@ -78,25 +77,25 @@ class EstoqueDao:
 
 class FornecedorDao:
     @classmethod
-    def salvar(cls, forcenedor : Fornecedor):
+    def salvar(cls, fornecedor : Fornecedor):
         with open('Fornecedor.txt' , 'a') as arq:
-            arq.writelines(forcenedor.nome + "|" +
-                           forcenedor.cnpg + "|" +
-                           forcenedor.telefone + "|" +
-                           forcenedor.categoria)
+            arq.writelines(fornecedor.nome + "|" +
+                           fornecedor.cnpj + "|" +
+                           fornecedor.telefone + "|" +
+                           fornecedor.categoria)
 
             arq.writelines('\n')
     @classmethod
     def ler(cls):
         with open('Fornecedor.txt', 'r') as arq:
-            cls.fornecedores=arq.readlines()
+            cls.fornecedor=arq.readlines()
 
-        cls.fornecedor = list(map(lambda x: x.replace('\n', ''), cls.fornecedores))
-        cls.fornecedor = list(map(lambda x: x.split('|'), cls.fornecedores))
+        cls.fornecedor = list(map(lambda x: x.replace('\n', ''), cls.fornecedor))
+        cls.fornecedor = list(map(lambda x: x.split('|'), cls.fornecedor))
 
         forneced=[]
 
-        for i in cls.fornecedores:
+        for i in cls.fornecedor:
             forneced.append(Fornecedor(i[0], i[1], i[2], i[3]))
 
         return forneced

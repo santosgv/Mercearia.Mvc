@@ -1,0 +1,8 @@
+Maca|5|Fruta|vitor|vivian|5|20/01/2022
+Maca|5|Fruta|vitor|vivian|5|20/01/2022
+Banana|10|Fruta|vitor|vivian|15|15/01/2022
+Maca|10|Fruta|vitor|vivian|15|15/01/2022
+uva|2|Fruta|vitor|vivian|25|21/01/2022
+Maca|5|Fruta|vitor|vivian|25|21/01/2022
+Banana|10|Fruta|vitor|vivian|2|21/01/2022
+uva|2|Fruta|vitor|vivian|6|21/01/2022
